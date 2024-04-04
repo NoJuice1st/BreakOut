@@ -8,8 +8,10 @@ public class Brick : MonoBehaviour
     public int hp = 1;
     public int pointValue = 1;
     public int pointsOnHit = 0;
-    public UnityEvent onDestroy;
     public GameObject particles;
+    public AudioClip hit;
+
+    public UnityEvent onDestroy;
     private GameManager gm;
 
     private void Start()
@@ -19,6 +21,7 @@ public class Brick : MonoBehaviour
 
     public void Damage(int damage = 1)
     {
+        AudioSystem.Play(hit);
         hp -= damage;
         Instantiate(particles, gameObject.transform.position, Quaternion.identity);
         gm.AddPoints(pointsOnHit);

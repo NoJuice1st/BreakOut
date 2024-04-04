@@ -6,6 +6,7 @@ public class Pad : MonoBehaviour
 {
     public float speed = 5f;
     public float forceStrength = 2f;
+    public AudioClip padHit;
 
     private Rigidbody2D rb;
 
@@ -21,6 +22,7 @@ public class Pad : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2))
         {
+            AudioSystem.Play(padHit);
             rb2.AddForce(new Vector2(Random.Range(-0.3f, 0.3f), forceStrength), ForceMode2D.Impulse);
         }
     }

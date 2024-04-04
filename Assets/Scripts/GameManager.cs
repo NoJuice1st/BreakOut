@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text lifeText;
     public TMP_Text pointText;
 
-    public GameObject winScreen;
+    public AudioClip loseSfx;
+
     public GameObject loseScreen;
 
     void Start()
@@ -37,25 +38,25 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void DestroyCheck()
+    async public void DestroyCheck()
     {
         if (GameObject.FindGameObjectsWithTag("Brick").Length <= 1)
         {
-            winScreen.SetActive(true);
-            //add await
+            SceneManager.LoadScene("WinScene");
+            await new WaitForSeconds(2f);
             FullReset();
         }
     }
 
-    public void RemoveLife()
+    async public void RemoveLife()
     {
         lives--;
         lifeText.text = $"Lives:{lives}";
-
-        if(lives <= 0)
+        if (lives <= 0)
         {
             loseScreen.SetActive(true);
-            //add await
+            AudioSystem.Play(loseSfx);
+            await new WaitForSeconds(2f);
 
             FullReset();
         }
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
     public void FullReset()
     {
         SceneManager.LoadScene("SampleScene");
+        loseScreen.SetActive(false);
         lives = 3;
         points = 0;
         pointText.text = $"Score:{points}";
