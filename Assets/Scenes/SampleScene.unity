@@ -244,6 +244,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
+      propertyPath: count
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
+      propertyPath: health
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
       propertyPath: customColor.b
       value: 0.39999998
       objectReference: {fileID: 0}
@@ -1019,6 +1027,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
+      propertyPath: count
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
+      propertyPath: interval
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
       propertyPath: customColor.b
       value: 0.3160377
       objectReference: {fileID: 0}
@@ -1478,6 +1494,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
+      propertyPath: count
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
+      propertyPath: health
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157263677777841661, guid: aa0d2f6abb32fa64286d9b93fdc7338a, type: 3}
       propertyPath: customColor.b
       value: 0.2971698
       objectReference: {fileID: 0}
@@ -1545,6 +1569,10 @@ PrefabInstance:
     - target: {fileID: 4567658177845782868, guid: f0231f275efe2d94d8239c9159164ec7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6229562016026558454, guid: f0231f275efe2d94d8239c9159164ec7, type: 3}
+      propertyPath: speed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6229562016026558454, guid: f0231f275efe2d94d8239c9159164ec7, type: 3}
       propertyPath: forceStrength

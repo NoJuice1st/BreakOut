@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Brick : MonoBehaviour
 {
-    [SerializeField] int hp = 1;
+    public int hp = 1;
     public UnityEvent onDestroy;
     public GameObject particles;
     private GameManager gm;

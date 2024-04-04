@@ -21,7 +21,7 @@ public class Pad : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb2))
         {
-            rb2.AddForce(new Vector2(Random.Range(-0.2f, 0.2f), forceStrength), ForceMode2D.Impulse);
+            rb2.AddForce(new Vector2(Random.Range(-0.3f, 0.3f), forceStrength), ForceMode2D.Impulse);
         }
     }
 }
