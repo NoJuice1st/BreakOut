@@ -7,10 +7,12 @@ public class Ball : MonoBehaviour
 {
     public float targetSpeed = 10f;
     public int damage = 1;
+    public Transform spawnPoint;
 
     public UnityEvent onDamageBrick;
     public UnityEvent onHitFloor;
     private Rigidbody2D rb;
+
 
     private void Start()
     {
@@ -29,10 +31,15 @@ public class Ball : MonoBehaviour
             onDamageBrick.Invoke();
             collision.gameObject.GetComponent<Brick>().Damage(damage);
         }
-        if(collision.gameObject.name.Contains("Floor"))
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name.Contains("Danger"))
         {
             onHitFloor.Invoke();
-            transform.position = Vector2.zero;
+            transform.position = spawnPoint.position;
+
         }
     }
 }

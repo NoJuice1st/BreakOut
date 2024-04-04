@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class Brick : MonoBehaviour
 {
     public int hp = 1;
+    public int pointValue = 1;
+    public int pointsOnHit = 0;
     public UnityEvent onDestroy;
     public GameObject particles;
     private GameManager gm;
@@ -19,10 +21,11 @@ public class Brick : MonoBehaviour
     {
         hp -= damage;
         Instantiate(particles, gameObject.transform.position, Quaternion.identity);
+        gm.AddPoints(pointsOnHit);
         if (hp <= 0)
         {
             onDestroy.Invoke();
-            gm.AddPoints();
+            gm.AddPoints(pointValue);
             Destroy(gameObject);
         }
     }
