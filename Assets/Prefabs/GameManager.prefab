@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeText: {fileID: 0}
   pointText: {fileID: 0}
+  loseSfx: {fileID: 0}
+  loseScreen: {fileID: 0}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class BrickSpawner : MonoBehaviour
@@ -19,7 +20,16 @@ public class BrickSpawner : MonoBehaviour
         {
             var instBrick = Instantiate(brick, transform.position + Vector3.right * interval * i, Quaternion.identity);
             Brick br;
+
+            instBrick.transform.localScale = Vector3.zero;
+
+            var sequence = DOTween.Sequence()
+                .Append(instBrick.transform.DOScale(1.1f, 0.2f).SetRelative())
+                .Append(instBrick.transform.DOScale(-0.1f, 0.1f).SetRelative());
+            sequence.SetLoops(1, LoopType.Yoyo);
+
             br = instBrick.GetComponent<Brick>();
+            
             br.hp = health;
             br.pointValue = pointValue;
             br.pointsOnHit = pointsOnHit;

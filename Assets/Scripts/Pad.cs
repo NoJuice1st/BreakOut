@@ -15,7 +15,7 @@ public class Pad : MonoBehaviour
         float direction = Input.GetAxis("Horizontal");
 
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(speed * direction, 0);
+        if(!rb.isKinematic)rb.velocity = new Vector2(speed * direction, 0);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

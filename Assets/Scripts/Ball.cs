@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class Ball : MonoBehaviour
 {
@@ -17,11 +18,16 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        transform.localScale = Vector2.zero;
+        transform.DOScale(1, 0.5f);
     }
 
     private void Update()
     {
-        rb.velocity = rb.velocity.normalized * targetSpeed;
+        var prevSpeed = rb.velocity.normalized;
+        if (prevSpeed == Vector2.zero) prevSpeed = Vector2.up;
+        if(rb.velocity == Vector2.zero) rb.velocity = prevSpeed * targetSpeed;
+        else rb.velocity = rb.velocity.normalized * targetSpeed; 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -38,8 +44,21 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.name.Contains("Danger"))
         {
             onHitFloor.Invoke();
+            transform.localScale = Vector2.zero;
             transform.position = spawnPoint.position;
-
+            rb.velocity = Vector2.up;
+            PauseSelf();
+            transform.DOScale(1, 0.5f).OnComplete(UnPauseSelf);
         }
+    }
+
+    private void PauseSelf()
+    {
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    private void UnPauseSelf()
+    {
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }

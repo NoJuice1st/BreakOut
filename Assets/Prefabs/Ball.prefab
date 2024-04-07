@@ -159,6 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetSpeed: 8
   damage: 1
+  spawnPoint: {fileID: 0}
   onDamageBrick:
     m_PersistentCalls:
       m_Calls: []

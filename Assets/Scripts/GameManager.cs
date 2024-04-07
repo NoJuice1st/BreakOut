@@ -3,32 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    static GameManager menuManager;
-
     private static int points;
     private static int lives = 3;
+
+    public GameObject player;
+    public GameObject ball;
 
     public TMP_Text lifeText;
     public TMP_Text pointText;
 
-    public AudioClip loseSfx;
+    public TMP_Text overText;
 
-    public GameObject loseScreen;
+    public GameObject gameOver;
+    public RawImage backgroundScroll;
 
-    void Start()
+    public Color winColor;
+    public Color loseColor;
+
+    public List<string> loserTexts;
+    public List<string> winnerTexts;
+
+    async void Start()
     {
-        if (!menuManager)
-        {
-            menuManager = this;
-            DontDestroyOnLoad(menuManager);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Pause();
+        pointText.text = $"Score:{points}";
+        lifeText.text = $"Lives:{lives}";
+        await new WaitForSeconds(1f);
+        Continue();
     }
 
     public void AddPoints(int point = 1)
@@ -38,37 +43,59 @@ public class GameManager : MonoBehaviour
         
     }
 
-    async public void DestroyCheck()
+    void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("Brick").Length <= 1)
+        if (GameObject.FindGameObjectsWithTag("Brick").Length <= 0)
         {
-            SceneManager.LoadScene("WinScene");
-            await new WaitForSeconds(2f);
-            FullReset();
+            GameOver(true);
         }
     }
 
-    async public void RemoveLife()
+    public void RemoveLife()
     {
         lives--;
         lifeText.text = $"Lives:{lives}";
         if (lives <= 0)
         {
-            loseScreen.SetActive(true);
-            AudioSystem.Play(loseSfx);
-            await new WaitForSeconds(2f);
-
-            FullReset();
+            GameOver(false);
         }
+    }
+
+    public void GameOver(bool hasWon = false)
+    {
+        Pause();
+        gameOver.SetActive(true);
+
+        Color resultColor = hasWon ? winColor : loseColor;
+        string resultOverText = hasWon ? winnerTexts[Random.Range(0, winnerTexts.Count)] : loserTexts[Random.Range(0, loserTexts.Count)];
+
+        gameOver.GetComponent<Image>().color = resultColor;
+        overText.text = resultOverText;
+        backgroundScroll.color = resultColor;
+        
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 
     public void FullReset()
     {
-        SceneManager.LoadScene("SampleScene");
-        loseScreen.SetActive(false);
+        SceneManager.LoadScene("GameScene");
         lives = 3;
         points = 0;
-        pointText.text = $"Score:{points}";
-        lifeText.text = $"Lives:{lives}";
+    }
+
+    public void Pause()
+    {
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    public void Continue()
+    {
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+        ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }
