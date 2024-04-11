@@ -14,6 +14,8 @@ public class Ball : MonoBehaviour
     public UnityEvent onHitFloor;
     private Rigidbody2D rb;
 
+    private bool canUnpause = true;
+
 
     private void Start()
     {
@@ -52,13 +54,18 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void PauseSelf()
+    public void PauseSelf()
     {
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
+    public void CantUnpause()
+    {
+        canUnpause = !canUnpause;
+    }
+
     private void UnPauseSelf()
     {
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        if(canUnpause)GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }

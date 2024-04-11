@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     public List<string> loserTexts;
     public List<string> winnerTexts;
 
+    private bool isGameOver = false;
+
     async void Start()
     {
         Pause();
@@ -47,7 +50,8 @@ public class GameManager : MonoBehaviour
     {
         if (GameObject.FindGameObjectsWithTag("Brick").Length <= 0)
         {
-            GameOver(true);
+            if(!isGameOver)GameOver(true);
+            isGameOver = true;
         }
     }
 
@@ -58,13 +62,18 @@ public class GameManager : MonoBehaviour
         if (lives <= 0)
         {
             GameOver(false);
+            isGameOver = true;
         }
     }
 
     public void GameOver(bool hasWon = false)
     {
         Pause();
+        
         gameOver.SetActive(true);
+
+        gameOver.GetComponent<RectTransform>().position = new Vector2(0, 500);
+        gameOver.GetComponent<RectTransform>().DOMoveY(0, 2f);
 
         Color resultColor = hasWon ? winColor : loseColor;
         string resultOverText = hasWon ? winnerTexts[Random.Range(0, winnerTexts.Count)] : loserTexts[Random.Range(0, loserTexts.Count)];
@@ -83,19 +92,28 @@ public class GameManager : MonoBehaviour
     public void FullReset()
     {
         SceneManager.LoadScene("GameScene");
+        ResetVariables();
+    }
+
+    public void ResetVariables()
+    {
         lives = 3;
         points = 0;
     }
 
     public void Pause()
     {
+        print("AAAAAAAAA");
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        ball.GetComponent<Ball>().PauseSelf();
+        ball.GetComponent<Ball>().CantUnpause();
     }
 
     public void Continue()
     {
+        print("Continued");
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
         ball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        ball.GetComponent<Ball>().CantUnpause();
     }
 }
